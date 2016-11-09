@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="">
+	<head>
+		<meta charset="utf-8">
+		<title>Shared Expenses</title>
+
+		<style type="text/css">
+			body {
+				background: #B7E1CE;
+				text-align: center;
+			}
+			body {
+				margin: 100px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h2>SHARED EXPENSES</h2>
+
+		<form action="calculate" method="post" id="user_inputs">
+			<p>H has already paid: <input type="number" name="H" value="" id="HPaid" /></p>
+		    <p>A: has already paid: <input type="number" name="A" value="" id="APaid" /></p>
+		    <p>E: has already paid: <input type="number" name="E" value="" id="EPaid" /></p>
+		</form>
+		<input type="submit" name="submit" value="Calculate" onClick="showInputs();"/>
+
+<hr>
+		<p>HPaid = <span id="displayH"></span></p>
+		<p>APaid = <span id="displayA"></span></p>
+		<p>EPaid = <span id="displayE"></span></p>
+<hr>
+
+
+
+        <!-- jQuery -->
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<script type"text/javascript">
+			var HPaid = document.getElementById("HPaid").value;
+			var APaid = document.getElementById("APaid").value;
+			var EPaid = document.getElementById("EPaid").value;
+		    function showInputs() {
+		        document.getElementById('displayH').innerHTML = document.getElementById("HPaid").value;
+		        document.getElementById('displayA').innerHTML = document.getElementById("APaid").value;
+		        document.getElementById('displayE').innerHTML = document.getElementById("EPaid").value;
+		    }
+		</script>
+
+
+	</body>
+
+</html>
