@@ -32,7 +32,7 @@
 		<p>PaidA = <span id="displayA"></span></p>
 		<p>PaidB = <span id="displayB"></span></p>
 		<p>PaidC = <span id="displayC"></span></p>
-		<!-- <p>allPaid = <span id="allPaid"></span></p> -->
+		<p>totalPaid = <span id="totalPaid"></span></p>
 
 <hr>
 
@@ -50,12 +50,16 @@
 				return {"PaidA": PaidA, "PaidB": PaidB, "PaidC": PaidC};				
 			}
 
+			function getTotalPaid() {
+				var currentPayments = getInputs();
+
+				return currentPayments["PaidA"] + currentPayments["PaidB"] + currentPayments["PaidC"];
+
+			}
 
 		    function showInputs() {
 		    	var currentPayments = getInputs();
-
-
-				// var allPaid = PaidA + PaidB + PaidC;
+				var totalPaid = getTotalPaid();
 
 				// var allTotals = {"PaidA": PaidA, "PaidB": PaidB, "PaidC": PaidC};
 				// var keys = Object.keys(allTotals);
@@ -64,7 +68,7 @@
 		        document.getElementById('displayA').innerHTML = currentPayments["PaidA"];
 		        document.getElementById('displayB').innerHTML = currentPayments["PaidB"];
 		        document.getElementById('displayC').innerHTML = currentPayments["PaidC"];
-		        // document.getElementById('allPaid').innerHTML = allPaid;
+		        document.getElementById('totalPaid').innerHTML = totalPaid;
 		    }
 
 		</script>
