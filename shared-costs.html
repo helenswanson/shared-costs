@@ -24,7 +24,7 @@
 		<form action="calculate" method="post" id="user_inputs">
 			<p>Roommate A has already paid: <input type="number" name="RoommateA" value="" id="PaidA" /></p>
 		    <p>Roommate B has already paid: <input type="number" name="RoommateB" value="" id="PaidB" /></p>
-		    <p>RoommateC has already paid: <input type="number" name="RoommateC" value="" id="PaidC" /></p>
+		    <p>Roommate C has already paid: <input type="number" name="RoommateC" value="" id="PaidC" /></p>
 		</form>
 		<input type="submit" name="submit" value="Calculate" onClick="showInputs();"/>
 
@@ -32,7 +32,7 @@
 		<p>PaidA = <span id="displayA"></span></p>
 		<p>PaidB = <span id="displayB"></span></p>
 		<p>PaidC = <span id="displayC"></span></p>
-		<p>allPaid = <span id="allPaid"></span></p>
+		<!-- <p>allPaid = <span id="allPaid"></span></p> -->
 
 <hr>
 
@@ -42,21 +42,29 @@
 		<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
 		<script type"text/javascript">
-
-		    function showInputs() {
+			function getInputs() {
 				var PaidA = Number(document.getElementById("PaidA").value);
 				var PaidB = Number(document.getElementById("PaidB").value);
 				var PaidC = Number(document.getElementById("PaidC").value);
-				var allPaid = PaidA + PaidB + PaidC;
 
-				var allTotals = {"PaidA": PaidA, "PaidB": PaidB, "PaidC": PaidC};
-				var keys = Object.keys(allTotals);
-				var largest = Math.max.apply(null, keys, map(x=>totals[x]));
+				return {"PaidA": PaidA, "PaidB": PaidB, "PaidC": PaidC};				
+			}
 
-		        document.getElementById('displayA').innerHTML = PaidA;
-		        document.getElementById('displayB').innerHTML = PaidB;
-		        document.getElementById('displayC').innerHTML = PaidC;
-		        document.getElementById('allPaid').innerHTML = allPaid;
+
+		    function showInputs() {
+		    	var currentPayments = getInputs();
+
+
+				// var allPaid = PaidA + PaidB + PaidC;
+
+				// var allTotals = {"PaidA": PaidA, "PaidB": PaidB, "PaidC": PaidC};
+				// var keys = Object.keys(allTotals);
+				// var largest = Math.max.apply(null, keys, map(x=>totals[x]));
+
+		        document.getElementById('displayA').innerHTML = currentPayments["PaidA"];
+		        document.getElementById('displayB').innerHTML = currentPayments["PaidB"];
+		        document.getElementById('displayC').innerHTML = currentPayments["PaidC"];
+		        // document.getElementById('allPaid').innerHTML = allPaid;
 		    }
 
 		</script>
