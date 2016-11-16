@@ -22,9 +22,9 @@
 		<h2>SHARED EXPENSES</h2>
 
 		<form action="calculate" method="post" id="user_inputs">
-			<p>Roommate A has already paid: <input type="number" name="RoommateA" value="" id="PaidA" /></p>
-		    <p>Roommate B has already paid: <input type="number" name="RoommateB" value="" id="PaidB" /></p>
-		    <p>Roommate C has already paid: <input type="number" name="RoommateC" value="" id="PaidC" /></p>
+			<p>Roommate A has already paid: <input type="number" name="roommateA" value="" id="PaidA" /></p>
+		    <p>Roommate B has already paid: <input type="number" name="roommateB" value="" id="PaidB" /></p>
+		    <p>Roommate C has already paid: <input type="number" name="roommateC" value="" id="PaidC" /></p>
 		</form>
 		<input type="submit" name="submit" value="Calculate" onClick="showInputs();"/>
 <hr>
@@ -43,15 +43,29 @@
 		<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
 		<script type"text/javascript">
-			function getInputs() {
-				var PaidA = Number(document.getElementById("PaidA").value);
-				var PaidB = Number(document.getElementById("PaidB").value);
-				var PaidC = Number(document.getElementById("PaidC").value);
 
-				return {"PaidA": PaidA, "PaidB": PaidB, "PaidC": PaidC};				
+			function getInputs() {
+				// var PaidA = Number(document.getElementById("PaidA").value);
+				// var PaidB = Number(document.getElementById("PaidB").value);
+				// var PaidC = Number(document.getElementById("PaidC").value);
+
+		    	// get all inputs into an array
+		    	var $inputs = $('#user_inputs :input');
+
+		    	// get an associative array of just the values
+			    var values = {};
+			    $inputs.each(function() {
+			        values[this.name] = $(this).val()/1;
+			    });
+
+		    	console.log(values);
+
+				return values;				
 			}
 
 			function getAveragePaid(currentPayments) {
+				
+
 				return (currentPayments["PaidA"] + currentPayments["PaidB"] + currentPayments["PaidC"])/3;
 			}
 
@@ -62,7 +76,7 @@
 		        document.getElementById('finalA').innerHTML = (averagePaid-currentPayments["PaidA"]);
 		        document.getElementById('finalB').innerHTML = (averagePaid-currentPayments["PaidB"]);
 		        document.getElementById('finalC').innerHTML = (averagePaid-currentPayments["PaidC"]);
-		        
+
 		        document.getElementById('displayA').innerHTML = currentPayments["PaidA"];
 		        document.getElementById('displayB').innerHTML = currentPayments["PaidB"];
 		        document.getElementById('displayC').innerHTML = currentPayments["PaidC"];
