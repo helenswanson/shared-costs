@@ -22,20 +22,15 @@
 		<h2>SHARED EXPENSES</h2>
 
 		<form action="calculate" method="post" id="user_inputs">
-			<p>Roommate A has already paid: <input type="number" name="roommateA" value="" id="PaidA" /></p>
-		    <p>Roommate B has already paid: <input type="number" name="roommateB" value="" id="PaidB" /></p>
-		    <p>Roommate C has already paid: <input type="number" name="roommateC" value="" id="PaidC" /></p>
+			<p>Roommate 1 has already paid: <input type="number" name="roommate1" value="" id="roommateA" /></p>
+		    <p>Roommate 2 has already paid: <input type="number" name="roommate2" value="" id="roommateB" /></p>
+		    <p>Roommate 3 has already paid: <input type="number" name="roommate3" value="" id="roommateC" /></p>
 		</form>
 		<input type="submit" name="submit" value="Calculate" onClick="showInputs();"/>
 <hr>
-		<p>Roommate A pays: <span id="finalA"></span></p>
-		<p>Roommate B pays: <span id="finalB"></span></p>
-		<p>Roommate C pays: <span id="finalC"></span></p>
-<hr>
-		<p>PaidA = <span id="displayA"></span></p>
-		<p>PaidB = <span id="displayB"></span></p>
-		<p>PaidC = <span id="displayC"></span></p>
-		<p>averagePaid = <span id="averagePaid"></span></p>
+		<p>Roommate 1 pays: <span id="finalA"></span></p>
+		<p>Roommate 2 pays: <span id="finalB"></span></p>
+		<p>Roommate 3 pays: <span id="finalC"></span></p>
 
         <!-- jQuery -->
 		<script src="https://code.jquery.com/jquery.js"></script>
@@ -45,10 +40,6 @@
 		<script type"text/javascript">
 
 			function getInputs() {
-				// var PaidA = Number(document.getElementById("PaidA").value);
-				// var PaidB = Number(document.getElementById("PaidB").value);
-				// var PaidC = Number(document.getElementById("PaidC").value);
-
 		    	// get all inputs into an array
 		    	var $inputs = $('#user_inputs :input');
 
@@ -64,23 +55,30 @@
 			}
 
 			function getAveragePaid(currentPayments) {
-				
+				var sum = 0;
+				var count = 0;
 
-				return (currentPayments["PaidA"] + currentPayments["PaidB"] + currentPayments["PaidC"])/3;
+				$.each(currentPayments, function(key, value) {
+					sum += value;
+					count += 1;
+				});
+
+				console.log("sum/count = " + sum/count);
+
+				return sum/count;
 			}
 
 		    function showInputs() {
 		    	var currentPayments = getInputs();
 				var averagePaid = getAveragePaid(currentPayments);
 
-		        document.getElementById('finalA').innerHTML = (averagePaid-currentPayments["PaidA"]);
-		        document.getElementById('finalB').innerHTML = (averagePaid-currentPayments["PaidB"]);
-		        document.getElementById('finalC').innerHTML = (averagePaid-currentPayments["PaidC"]);
+				$.each(currentPayments, function(key, value) {
 
-		        document.getElementById('displayA').innerHTML = currentPayments["PaidA"];
-		        document.getElementById('displayB').innerHTML = currentPayments["PaidB"];
-		        document.getElementById('displayC').innerHTML = currentPayments["PaidC"];
-		        document.getElementById('averagePaid').innerHTML = averagePaid;
+				});
+
+		        document.getElementById('finalA').innerHTML = (averagePaid-currentPayments["roommateA"]);
+		        document.getElementById('finalB').innerHTML = (averagePaid-currentPayments["roommateB"]);
+		        document.getElementById('finalC').innerHTML = (averagePaid-currentPayments["roommateC"]);
 		    }
 
 		</script>
