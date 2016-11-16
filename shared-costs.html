@@ -22,15 +22,14 @@
 		<h2>SHARED EXPENSES</h2>
 
 		<form action="calculate" method="post" id="user_inputs">
-			<p>Roommate 1 has already paid: <input type="number" name="roommate1" value="" id="roommateA" /></p>
-		    <p>Roommate 2 has already paid: <input type="number" name="roommate2" value="" id="roommateB" /></p>
-		    <p>Roommate 3 has already paid: <input type="number" name="roommate3" value="" id="roommateC" /></p>
+			<p>Roommate 1 has already paid: <input type="number" name="Roommate 1" /></p>
+		    <p>Roommate 2 has already paid: <input type="number" name="Roommate 2" /></p>
+		    <p>Roommate 3 has already paid: <input type="number" name="Roommate 3" /></p>
 		</form>
-		<input type="submit" name="submit" value="Calculate" onClick="showInputs();"/>
-<hr>
-		<p>Roommate 1 pays: <span id="finalA"></span></p>
-		<p>Roommate 2 pays: <span id="finalB"></span></p>
-		<p>Roommate 3 pays: <span id="finalC"></span></p>
+		<input type="submit" name="submit" value="Calculate" onClick="displayPayments();"/>
+		
+		<hr>
+		<div id="finalTotals"></div>
 
         <!-- jQuery -->
 		<script src="https://code.jquery.com/jquery.js"></script>
@@ -40,16 +39,14 @@
 		<script type"text/javascript">
 
 			function getInputs() {
-		    	// get all inputs into an array
-		    	var $inputs = $('#user_inputs :input');
+				// get all inputs into an array
+				var $inputs = $('#user_inputs :input');
 
-		    	// get an associative array of just the values
-			    var values = {};
-			    $inputs.each(function() {
-			        values[this.name] = $(this).val()/1;
-			    });
-
-		    	console.log(values);
+				// get an associative array of just the values
+				var values = {};
+				$inputs.each(function() {
+				    values[this.name] = $(this).val()/1;
+				});
 
 				return values;				
 			}
@@ -63,23 +60,35 @@
 					count += 1;
 				});
 
-				console.log("sum/count = " + sum/count);
-
 				return sum/count;
 			}
 
-		    function showInputs() {
-		    	var currentPayments = getInputs();
+			function getFinalPayments(currentPayments) {
 				var averagePaid = getAveragePaid(currentPayments);
+				var finalPayments = {};
 
 				$.each(currentPayments, function(key, value) {
-
+					var finalPaymentAmount = averagePaid-currentPayments[key];
+					finalPayments[key] = finalPaymentAmount;
 				});
 
-		        document.getElementById('finalA').innerHTML = (averagePaid-currentPayments["roommateA"]);
-		        document.getElementById('finalB').innerHTML = (averagePaid-currentPayments["roommateB"]);
-		        document.getElementById('finalC').innerHTML = (averagePaid-currentPayments["roommateC"]);
-		    }
+				return finalPayments;
+			}
+
+			function displayPayments() {
+				var currentPayments = getInputs();
+				var finalPayments = getFinalPayments(currentPayments);
+
+				$('#finalTotals').empty();
+
+				var finalTotals = "";
+
+				$.each(finalPayments, function(key, value) {
+					finalTotals += "<p>" + key + " pays: $" + value + "</p>"; 
+				});
+
+				document.getElementById('finalTotals').innerHTML = finalTotals;
+			}
 
 		</script>
 	</body>
