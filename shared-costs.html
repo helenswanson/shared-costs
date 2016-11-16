@@ -27,14 +27,15 @@
 		    <p>Roommate C has already paid: <input type="number" name="RoommateC" value="" id="PaidC" /></p>
 		</form>
 		<input type="submit" name="submit" value="Calculate" onClick="showInputs();"/>
-
+<hr>
+		<p>Roommate A pays: <span id="finalA"></span></p>
+		<p>Roommate B pays: <span id="finalB"></span></p>
+		<p>Roommate C pays: <span id="finalC"></span></p>
 <hr>
 		<p>PaidA = <span id="displayA"></span></p>
 		<p>PaidB = <span id="displayB"></span></p>
 		<p>PaidC = <span id="displayC"></span></p>
-		<p>totalPaid = <span id="totalPaid"></span></p>
-
-<hr>
+		<p>averagePaid = <span id="averagePaid"></span></p>
 
         <!-- jQuery -->
 		<script src="https://code.jquery.com/jquery.js"></script>
@@ -50,25 +51,22 @@
 				return {"PaidA": PaidA, "PaidB": PaidB, "PaidC": PaidC};				
 			}
 
-			function getTotalPaid() {
-				var currentPayments = getInputs();
-
-				return currentPayments["PaidA"] + currentPayments["PaidB"] + currentPayments["PaidC"];
-
+			function getAveragePaid(currentPayments) {
+				return (currentPayments["PaidA"] + currentPayments["PaidB"] + currentPayments["PaidC"])/3;
 			}
 
 		    function showInputs() {
 		    	var currentPayments = getInputs();
-				var totalPaid = getTotalPaid();
+				var averagePaid = getAveragePaid(currentPayments);
 
-				// var allTotals = {"PaidA": PaidA, "PaidB": PaidB, "PaidC": PaidC};
-				// var keys = Object.keys(allTotals);
-				// var largest = Math.max.apply(null, keys, map(x=>totals[x]));
-
+		        document.getElementById('finalA').innerHTML = (averagePaid-currentPayments["PaidA"]);
+		        document.getElementById('finalB').innerHTML = (averagePaid-currentPayments["PaidB"]);
+		        document.getElementById('finalC').innerHTML = (averagePaid-currentPayments["PaidC"]);
+		        
 		        document.getElementById('displayA').innerHTML = currentPayments["PaidA"];
 		        document.getElementById('displayB').innerHTML = currentPayments["PaidB"];
 		        document.getElementById('displayC').innerHTML = currentPayments["PaidC"];
-		        document.getElementById('totalPaid').innerHTML = totalPaid;
+		        document.getElementById('averagePaid').innerHTML = averagePaid;
 		    }
 
 		</script>
