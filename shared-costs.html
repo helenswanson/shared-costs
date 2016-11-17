@@ -21,20 +21,59 @@
 		
 		<form action="calculate" method="POST" id="user_inputs">
 			<div id="dynamicInput">
-				Roommate 1 has already paid: <input type="number" name="Roommate 1">
-				Roommate 2 has already paid: <input type="number" name="Roommate 2">
+				<div>Roommate 1 has already paid: <input type="number" name="Roommate 1"></div>
+				<div>Roommate 2 has already paid: <input type="number" name="Roommate 2"></div>
 			</div>
 			<input class="button" type="button" value="Add another roommate" onClick="addInput();">
 		</form>
-		
+
 		<input class="button" type="submit" name="submit" value="Calculate" onClick="displayPayments();"/>
 
 		<hr>
 		<div id="finalTotals"></div>
+		<hr>
+
+		<div id="output-1"></div>
+		<hr>
+		<div id="output-2"></div>
+
 
         <!-- jQuery, Handlebars -->
 		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+
+		<script id="roommate-paid-template" type="text/x-handlebars-template">
+			<div class="entry">
+				<div>{{name}} has already paid: <input type="number" name="{{name}}"></div>
+			</div>
+		</script>
+
+		<script id="entry-template-output" type="text/x-handlebars-template">
+			<div class="entry-1">
+				<div>{{name}} has already paid: <input type="number" name="{{name}}"></div>
+			</div>
+		</script>
+
+		<script>
+			// get your template content
+			var source = $("#roommate-paid-template").html();
+
+			// use Handlebars to "compile" the template
+			var template = Handlebars.compile(source);
+
+			// set some data to use in the template
+			var data = {name: "Roommate 1"};
+
+			// combine the template with your data to create useable HTML
+			var html = template(data);
+
+			// append your newly created html
+			$('#output-1').append(html);
+
+
+		</script>
+
+
 
 		<script type"text/javascript">
 			var inputCounter = 2;
@@ -48,33 +87,38 @@
 			     }
 			     else {
 			          var newdiv = document.createElement('div');
-			          newdiv.innerHTML = "Roommate " + (inputCounter + 1) + " has already paid: <input type='number' name='Roommate "+ (inputCounter + 1) +"'>";
+			          newdiv.innerHTML = "<div>Roommate " + (inputCounter + 1) + " has already paid: <input type='number' name='Roommate "+ (inputCounter + 1) +"'></div>";
 			          document.getElementById(divName).appendChild(newdiv);
 			          inputCounter += 1;
 			     }
 			}
 
-			function getInputs() {
+			function getRoommates() {
 				// get all inputs into an array
 				var $inputs = $('#dynamicInput :input');
 
-				// get an object with key:value as roommate:payment
-				var values = {};
+				// makes an array of objects with roommate:payment
+				var roommates = [];
 				$inputs.each(function() {
-				    values[this.name] = $(this).val()/1;
+					var roommate = {
+						name: this.name,
+						paid: $(this).val()/1
+					};
+
+					roommates.push(roommate);
 				});
 
-				console.log(values);
+				console.log(roommates);
 
-				return values;				
+				return roommates;				
 			}
 
-			function getAveragePaid(currentPayments) {
+			function getAveragePaid(roommates) {
 				var sum = 0;
 				var count = 0;
 
-				$.each(currentPayments, function(key, value) {
-					sum += value;
+				$.each(roommates, function(key, roommate) {
+					sum += roommate.paid;
 					count += 1;
 				});
 
@@ -83,28 +127,24 @@
 				return sum/count;
 			}
 
-			function getFinalPayments(currentPayments) {
-				var averagePaid = getAveragePaid(currentPayments);
-				var finalPayments = {};
+			function setFinalPayments(roommates) {
+				var averagePaid = getAveragePaid(roommates);
 
-				$.each(currentPayments, function(key, value) {
-					var finalPaymentAmount = averagePaid-currentPayments[key];
-					finalPayments[key] = finalPaymentAmount;
+				$.each(roommates, function(key, roommate) {
+					roommate.owes = averagePaid-roommate.paid;
 				});
-
-				return finalPayments;
 			}
 
 			function displayPayments() {
-				var currentPayments = getInputs();
-				var finalPayments = getFinalPayments(currentPayments);
+				var roommates = getRoommates();
+				setFinalPayments(roommates);
 
 				$('#finalTotals').empty();
 
 				var finalTotals = "";
 
-				$.each(finalPayments, function(key, value) {
-					finalTotals += "<p>" + key + " pays: $" + value + "</p>"; 
+				$.each(roommates, function(key, roommate) {
+					finalTotals += "<p>" + roommate.name + " owes: $" + roommate.owes + "</p>"; 
 				});
 
 				document.getElementById('finalTotals').innerHTML = finalTotals;
