@@ -8,9 +8,10 @@
 			body {
 				background: #B7E1CE;
 				text-align: center;
-			}
-			body {
 				margin: 100px;
+			}
+			.button {
+				margin: 10px;
 			}
 		</style>
 	</head>
@@ -18,13 +19,21 @@
 	<body>
 		<h2>SHARED EXPENSES</h2>
 
-		<form action="calculate" method="post" id="user_inputs">
+<!-- 		<form action="calculate" method="post" id="user_inputs">
 			<p>Roommate 1 has already paid: <input type="number" name="Roommate 1" /></p>
 		    <p>Roommate 2 has already paid: <input type="number" name="Roommate 2" /></p>
 		    <p>Roommate 3 has already paid: <input type="number" name="Roommate 3" /></p>
-		</form>
-		<input type="submit" name="submit" value="Calculate" onClick="displayPayments();"/>
+		</form> -->
+		<!-- <input type="submit" name="submit" value="Calculate" onClick="displayPayments();"/> -->
 		
+		<form action="calculate" method="POST" id="user_inputs">
+		     <div id="dynamicInput">
+		          Roommate 1 has already paid: <input type="number" name="Roommate 1">
+		     </div>
+		     <input class="button" type="button" value="Add another roommate" onClick="addInput('dynamicInput');">
+		</form>
+		<input class="button" type="submit" name="submit" value="Calculate" onClick="displayPayments();"/>
+
 		<hr>
 		<div id="finalTotals"></div>
 
@@ -33,6 +42,21 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
 
 		<script type"text/javascript">
+			var counter = 1;
+
+			function addInput(divName){
+				var limit = 6;
+
+			     if (counter == limit)  {
+			          alert("You have reached the limit of adding " + counter + " roommates");
+			     }
+			     else {
+			          var newdiv = document.createElement('div');
+			          newdiv.innerHTML = "Roommate " + (counter + 1) + " has already paid: <input type='number' name='Roommate "+ (counter + 1) +"'>";
+			          document.getElementById(divName).appendChild(newdiv);
+			          counter += 1;
+			     }
+			}
 
 			function getInputs() {
 				// get all inputs into an array
@@ -43,6 +67,8 @@
 				$inputs.each(function() {
 				    values[this.name] = $(this).val()/1;
 				});
+
+				// console.log(values);
 
 				return values;				
 			}
