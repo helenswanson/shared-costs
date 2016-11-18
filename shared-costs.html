@@ -18,30 +18,26 @@
 
 	<body>
 		<h2>SHARED EXPENSES</h2>
-		
-<!-- 		<form action="calculate" method="POST" id="user_inputs">
-			<div id="dynamicInput">
-				<div>Roommate 1 has already paid: <input type="number" name="Roommate 1"></div>
-				<div>Roommate 2 has already paid: <input type="number" name="Roommate 2"></div>
-			</div>
-			<input class="button" type="button" value="Add another roommate" onClick="addInput();">
-		</form>
 
-		<input class="button" type="submit" name="submit" value="Calculate" onClick="displayPayments();"/>
+		<div class="entry">
+			<form id="user_inputs">
+				<div id="dynamicInput">
+					<div id="roommate-list"></div>
+				</div>
+				<input class="button" type="button" value="Add another roommate" onClick="addInput();">
+			</form>
+			<input class="button" type="submit" name="submit" value="Calculate" onClick="displayPayments();"/>
+		</div>
 
-		<hr>
 		<div id="finalTotals"></div>
-		<hr> -->
-
-		<div id="roommate-list"></div>
 		<hr>
 
 		<script id="roommate-list-template" type="text/x-handlebars-template">
-			<div class="entry">
-				{{#each this}}
-					<div>{{name}} has already paid: <input type="number" name="{{name}}"></div>
-				{{/each}}
-			</div>
+			<div>{{name}} has already paid: <input type="number" name="{{name}}"></div>
+		</script>
+
+		<script id="roommate-final-template" type="text/x-handlebars-template">
+			<div>{{name}} owes: ${{owes}}</div>
 		</script>
 
         <!-- jQuery, Handlebars -->
@@ -56,41 +52,38 @@
 			var template = Handlebars.compile(source);
 
 			// set some data to use in the template
-			var data = [	{name: "Roommate 1", paid: null, owes: null},
-							{name: "Roommate 2", paid: null, owes: null},
-							{name: "Roommate 3", paid: null, owes: null},
-							{name: "Roommate 4", paid: null, owes: null},
-							{name: "Roommate 5", paid: null, owes: null},
-							{name: "Roommate 6", paid: null, owes: null},
-							{name: "Roommate 7", paid: null, owes: null},
-							{name: "Roommate 8", paid: null, owes: null},
-							{name: "Roommate 9", paid: null, owes: null}
-						];
+			var roommates = [	{name: "Roommate 1", paid: "", owes: ""},
+								{name: "Roommate 2", paid: "", owes: ""}
+							];
 
-			// combine the template with your data to create useable HTML
-			var html = template(data);
+			$.each(roommates, function(index, roommate) {
+				// combine the template with individual roommate to create useable HTML
+				var html = template(roommate);
 
-			// append your newly created html
-			$('#roommate-list').append(html);
+				// append your newly created html
+				$('#roommate-list').append(html);
+			});
 
-		</script>
+			// ===============================================
 
-		<script type"text/javascript">
 			var inputCounter = 2;
 
 			function addInput(){
 				var divName = "dynamicInput";
 				var limit = 9;
 
-			     if (inputCounter == limit)  {
-			          alert("You have reached the limit of adding " + inputCounter + " roommates");
-			     }
-			     else {
-			          var newdiv = document.createElement('div');
-			          newdiv.innerHTML = "<div>Roommate " + (inputCounter + 1) + " has already paid: <input type='number' name='Roommate "+ (inputCounter + 1) +"'></div>";
-			          document.getElementById(divName).appendChild(newdiv);
-			          inputCounter += 1;
-			     }
+				if (inputCounter == limit)  {
+						alert("You have reached the limit of adding " + inputCounter + " roommates");
+				}
+				else {
+					var roommate = {name: "Roommate " + (inputCounter + 1), paid: "", owes: ""};
+					// combine the template with individual roommate to create useable HTML
+					var html = template(roommate);
+					// append your newly created html
+					$('#roommate-list').append(html);
+
+					inputCounter += 1;
+				}
 			}
 
 			function getRoommates() {
@@ -102,10 +95,12 @@
 				$inputs.each(function() {
 					var roommate = {
 						name: this.name,
-						paid: $(this).val()/1
+						paid: $(this).val()
 					};
 
-					roommates.push(roommate);
+					if(roommate.paid !== "") {
+						roommates.push(roommate);
+					}
 				});
 
 				console.log(roommates);
@@ -118,8 +113,10 @@
 				var count = 0;
 
 				$.each(roommates, function(key, roommate) {
-					sum += roommate.paid;
-					count += 1;
+					if(roommate.paid !== "") {
+						sum += roommate.paid/1;
+						count += 1;
+					}
 				});
 
 				console.log("sum/count = " + sum/count);
@@ -131,7 +128,7 @@
 				var averagePaid = getAveragePaid(roommates);
 
 				$.each(roommates, function(key, roommate) {
-					roommate.owes = averagePaid-roommate.paid;
+					roommate.owes = averagePaid-roommate.paid/1;
 				});
 			}
 
