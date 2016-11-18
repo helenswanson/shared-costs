@@ -35,45 +35,52 @@
 
 		<div id="output-1"></div>
 		<hr>
-		<div id="output-2"></div>
-
+		<!-- <div id="output-2"></div> -->
 
         <!-- jQuery, Handlebars -->
 		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
 
-		<script id="roommate-paid-template" type="text/x-handlebars-template">
+		<script id="roommates-paid-template" type="text/x-handlebars-template">
 			<div class="entry">
 				<div>{{name}} has already paid: <input type="number" name="{{name}}"></div>
 			</div>
 		</script>
 
-		<script id="entry-template-output" type="text/x-handlebars-template">
-			<div class="entry-1">
-				<div>{{name}} has already paid: <input type="number" name="{{name}}"></div>
+<!-- 		<script id="roommates-owe-template" type="text/x-handlebars-template">
+			<div class="entry">
+				<div>{{name}} owes: $<input type="number" name="{{name}}"></div>
 			</div>
-		</script>
+		</script> -->
 
 		<script>
 			// get your template content
-			var source = $("#roommate-paid-template").html();
+			var roommatesPaidSource = $("#roommate-paid-template").html();
+			// var roommatesOweSource = $("#roommate-owe-template").html();
 
 			// use Handlebars to "compile" the template
-			var template = Handlebars.compile(source);
+			var roommatesPaidTemplate = Handlebars.compile(roommatesPaidSource);
+			// var roommatesOweTemplate = Handlebars.compile(roommatesOweSource);
 
 			// set some data to use in the template
-			var data = {name: "Roommate 1"};
+			var roommates = [	{name: "Roommate 1", "paid": "", "owes": ""},
+								{name: "Roommate 2", "paid": "", "owes": ""},
+								{name: "Roommate 3", "paid": "", "owes": ""},
+								{name: "Roommate 4", "paid": "", "owes": ""},
+								{name: "Roommate 5", "paid": "", "owes": ""},
+								{name: "Roommate 6", "paid": "", "owes": ""},
+								{name: "Roommate 7", "paid": "", "owes": ""},
+								{name: "Roommate 8", "paid": "", "owes": ""},
+								{name: "Roommate 9", "paid": "", "owes": ""}
+							];
 
 			// combine the template with your data to create useable HTML
-			var html = template(data);
+			var html = template(roommates);
 
 			// append your newly created html
 			$('#output-1').append(html);
-
-
+			// $('#output-2').append(html);
 		</script>
-
-
 
 		<script type"text/javascript">
 			var inputCounter = 2;
