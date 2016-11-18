@@ -19,7 +19,7 @@
 	<body>
 		<h2>SHARED EXPENSES</h2>
 		
-		<form action="calculate" method="POST" id="user_inputs">
+<!-- 		<form action="calculate" method="POST" id="user_inputs">
 			<div id="dynamicInput">
 				<div>Roommate 1 has already paid: <input type="number" name="Roommate 1"></div>
 				<div>Roommate 2 has already paid: <input type="number" name="Roommate 2"></div>
@@ -31,55 +31,48 @@
 
 		<hr>
 		<div id="finalTotals"></div>
+		<hr> -->
+
+		<div id="roommate-list"></div>
 		<hr>
 
-		<div id="output-1"></div>
-		<hr>
-		<!-- <div id="output-2"></div> -->
+		<script id="roommate-list-template" type="text/x-handlebars-template">
+			<div class="entry">
+				{{#each this}}
+					<div>{{name}} has already paid: <input type="number" name="{{name}}"></div>
+				{{/each}}
+			</div>
+		</script>
 
         <!-- jQuery, Handlebars -->
 		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
 
-		<script id="roommates-paid-template" type="text/x-handlebars-template">
-			<div class="entry">
-				<div>{{name}} has already paid: <input type="number" name="{{name}}"></div>
-			</div>
-		</script>
-
-<!-- 		<script id="roommates-owe-template" type="text/x-handlebars-template">
-			<div class="entry">
-				<div>{{name}} owes: $<input type="number" name="{{name}}"></div>
-			</div>
-		</script> -->
-
 		<script>
 			// get your template content
-			var roommatesPaidSource = $("#roommate-paid-template").html();
-			// var roommatesOweSource = $("#roommate-owe-template").html();
+			var source = $("#roommate-list-template").html();
 
 			// use Handlebars to "compile" the template
-			var roommatesPaidTemplate = Handlebars.compile(roommatesPaidSource);
-			// var roommatesOweTemplate = Handlebars.compile(roommatesOweSource);
+			var template = Handlebars.compile(source);
 
 			// set some data to use in the template
-			var roommates = [	{name: "Roommate 1", "paid": "", "owes": ""},
-								{name: "Roommate 2", "paid": "", "owes": ""},
-								{name: "Roommate 3", "paid": "", "owes": ""},
-								{name: "Roommate 4", "paid": "", "owes": ""},
-								{name: "Roommate 5", "paid": "", "owes": ""},
-								{name: "Roommate 6", "paid": "", "owes": ""},
-								{name: "Roommate 7", "paid": "", "owes": ""},
-								{name: "Roommate 8", "paid": "", "owes": ""},
-								{name: "Roommate 9", "paid": "", "owes": ""}
-							];
+			var data = [	{name: "Roommate 1", paid: null, owes: null},
+							{name: "Roommate 2", paid: null, owes: null},
+							{name: "Roommate 3", paid: null, owes: null},
+							{name: "Roommate 4", paid: null, owes: null},
+							{name: "Roommate 5", paid: null, owes: null},
+							{name: "Roommate 6", paid: null, owes: null},
+							{name: "Roommate 7", paid: null, owes: null},
+							{name: "Roommate 8", paid: null, owes: null},
+							{name: "Roommate 9", paid: null, owes: null}
+						];
 
 			// combine the template with your data to create useable HTML
-			var html = template(roommates);
+			var html = template(data);
 
 			// append your newly created html
-			$('#output-1').append(html);
-			// $('#output-2').append(html);
+			$('#roommate-list').append(html);
+
 		</script>
 
 		<script type"text/javascript">
