@@ -8,7 +8,7 @@
 			body {
 				background: #B7E1CE;
 				text-align: center;
-				/*margin: 100px;*/
+				margin: 100px;
 			}
 			.button {
 				margin: 10px;
@@ -23,8 +23,10 @@
 				<div id="dynamicInput">
 					<div id="roommate-list"></div>
 				</div>
-				<input class="button" type="button" value="Add another roommate" onClick="addInput();">
-				<input id="clear" class="button" type="button" value="Clear">
+				<div class="roommate-buttons">
+					<input class="button" type="button" value="Add another roommate" onClick="addInput();">
+					<input id="clear" class="button" type="button" value="Start Over">
+				</div>
 			</form>
 			<input class="button" type="submit" name="submit" value="Calculate" onClick="displayPayments();"/>
 		</div><hr>
@@ -35,7 +37,6 @@
 		<script id="roommate-list-template" type="text/x-handlebars-template">
 			<div>{{name}} has already paid: <input type="number" name="{{name}}"></div>
 		</script>
-
 		<script id="roommate-final-template" type="text/x-handlebars-template">
 			<div>{{name}} owes: ${{owes}}</div>
 		</script>
@@ -45,7 +46,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
 
 		<script>
-			// ===================Handlebars specific JS============================
+			// ===================Handlebars specific============================
 			// get your template content
 			var paidSource = $("#roommate-list-template").html();
 			var owesSource = $("#roommate-final-template").html();
@@ -63,7 +64,7 @@
 				$('#roommate-list').append(html);
 			});
 
-			// ===================General JS============================
+			// ===================General============================
 			$("#clear").click(function(){
 			      window.location.reload()
 			});
@@ -95,7 +96,6 @@
 					var roommate = 	{	name: this.name,
 										paid: $(this).val()
 									};
-
 					if(roommate.paid !== "") {
 						roommates.push(roommate);
 					}
