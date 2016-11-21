@@ -8,7 +8,7 @@
 			body {
 				background: #B7E1CE;
 				text-align: center;
-				margin: 100px;
+				/*margin: 100px;*/
 			}
 			.button {
 				margin: 10px;
@@ -24,6 +24,7 @@
 					<div id="roommate-list"></div>
 				</div>
 				<input class="button" type="button" value="Add another roommate" onClick="addInput();">
+				<input id="clear" class="button" type="button" value="Clear">
 			</form>
 			<input class="button" type="submit" name="submit" value="Calculate" onClick="displayPayments();"/>
 		</div><hr>
@@ -48,16 +49,13 @@
 			// get your template content
 			var paidSource = $("#roommate-list-template").html();
 			var owesSource = $("#roommate-final-template").html();
-
 			// use Handlebars to "compile" the template
 			var templateA = Handlebars.compile(paidSource);
 			var templateB = Handlebars.compile(owesSource);
-
 			// set some data to use in the template
 			var roommates = [	{name: "Roommate 1", paid: "", owes: ""},
 								{name: "Roommate 2", paid: "", owes: ""}
 							];
-
 			$.each(roommates, function(index, roommate) {
 				// combine the templateA with individual roommate to create useable HTML
 				var html = templateA(roommate);
@@ -66,8 +64,11 @@
 			});
 
 			// ===================General JS============================
-			var inputCounter = 2;
+			$("#clear").click(function(){
+			      window.location.reload()
+			});
 
+			var inputCounter = 2;
 			function addInput(){
 				var limit = 9;
 
