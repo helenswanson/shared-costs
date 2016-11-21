@@ -5,6 +5,7 @@
 		<title>Shared Expenses</title>
 
 		<link rel="icon" href="images/favicon-dollar.ico">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<style type="text/css">
 			body {
 				background: #B7E1CE;
@@ -42,9 +43,10 @@
 			<div>{{name}} owes: ${{owes}}</div>
 		</script>
 
-        <!-- jQuery, Handlebars -->
+        <!-- jQuery, Handlebars, Bootstrap -->
 		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+    	<script src="js/bootstrap.min.js"></script>
 
 		<script>
 			// ===================Handlebars specific============================
@@ -65,7 +67,7 @@
 				$('#roommate-list').append(html);
 			});
 
-			// ===================General============================
+			// ===================General========================================
 			$("#clear").click(function(){
 			      window.location.reload()
 			});
