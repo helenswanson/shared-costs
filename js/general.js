@@ -1,22 +1,34 @@
 // ===================Handlebars specific============================
 // get your template content
-var paidSource = $("#roommate-list-template").html();
-var owesSource = $("#roommate-final-template").html();
+var paidSource = $("#roommate-paid-template").html();
+var owesSource = $("#roommate-owes-template").html();
 // use Handlebars to "compile" the template
-var templateA = Handlebars.compile(paidSource);
-var templateB = Handlebars.compile(owesSource);
+var roommatePaidTemplate = Handlebars.compile(paidSource);
+var roommateOwesTemplate = Handlebars.compile(owesSource);
 // set some data to use in the template
+
 var roommates = [	{name: "Roommate 1", paid: "", owes: ""},
 					{name: "Roommate 2", paid: "", owes: ""}
 				];
+
+var roommates = getStoredRoomates();
+
 $.each(roommates, function(index, roommate) {
 	// combine the templateA with individual roommate to create useable HTML
-	var html = templateA(roommate);
+	var roommatePaidHTML = roommatePaidTemplate(roommate);
+	var roommateOwesHTML = roommateOwesTemplate(roommate);
+
 	// append your newly created html
-	$('#roommate-list').append(html);
+	$('#roommate-paid').append(roommatePaidHTML);
+	$('#roommate-owes').append(roommateOwesHTML);
+
 });
 
 // ===================General========================================
+// $("#clear").click(function(){
+//   window.location.reload()
+// });
+
 var inputCounter = 2;
 function addInput(){
 	var limit = 9;
@@ -29,7 +41,7 @@ function addInput(){
 		// combine the template with roommate to create useable HTML
 		var html = templateA(roommate);
 		// append your newly created html
-		$('#roommate-list').append(html);
+		$('#roommate-paid').append(html);
 
 		inputCounter += 1;
 	}
@@ -74,9 +86,11 @@ function updateLocalStorage(roommates) {
 	console.log('local storage: ', JSON.stringify(roommates));
 }
 
-function getLocalStorage() {
+function getStoredRoomates() {
 	var storedRoommates = localStorage.getItem('roommates');
 	console.log('storedRoommates: ', JSON.parse(storedRoommates));
+
+	return JSON.parse(storedRoommates);
 }
 
 function setFinalPayments(roommates) {
@@ -91,14 +105,14 @@ function displayPayments() {
 	var roommates = getRoommates();
 	setFinalPayments(roommates);
 	updateLocalStorage(roommates);
-	getLocalStorage();
 
-	$('#roommate-final').empty();
+
+	$('#roommate-owes').empty();
 	$.each(roommates, function(index, roommate) {
 		// combine the templateB with roommate payment to create useable HTML
 		var html = templateB(roommate);
 		// append your newly created html
-		$('#roommate-final').append(html);
+		$('#roommate-owes').append(html);
 	});
 }
 
@@ -107,5 +121,18 @@ $(document).ready(function() {
 	$("#clear").click(function(){
       window.location.reload()
 	});
+
+	var localStorage = getStoredRoomates();
+	console.log('localStorage: ', localStorage);
+
+	if(localStorage){ 
+		alert("Local storage exists");
+	} else {
+		alert("No local storage");
+	}
+
+	// if localStorage is empty, load page normally
+	// if localStorage contains saved values, display all of them as they were
+
 
 });

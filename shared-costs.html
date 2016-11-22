@@ -36,7 +36,7 @@
 		<div class="entry">
 			<form id="user_inputs">
 				<div id="dynamicInput">
-					<div id="roommate-list"></div>
+					<div id="roommate-paid"></div>
 				</div>
 				<button class="button add" type="button" value="Add roommate" onClick="addInput();"><i class="fa fa-user-plus fa-lg"></i></button>
 			</form>
@@ -44,13 +44,13 @@
 			<input id="clear" class="button" type="button" value="Start Over">
 		</div><hr>
 
-		<div id="roommate-final"></div>
+		<div id="roommate-owes"></div>
 
 		<!-- Handlebars templates -->
-		<script id="roommate-list-template" type="text/x-handlebars-template">
-			<div>{{name}} has already paid: <input type="number" name="{{name}}"></div>
+		<script id="roommate-paid-template" type="text/x-handlebars-template">
+			<div>{{name}} has already paid: <input type="number" name="{{name}}" value="{{paid}}"></div>
 		</script>
-		<script id="roommate-final-template" type="text/x-handlebars-template">
+		<script id="roommate-owes-template" type="text/x-handlebars-template">
 			<div>{{name}} owes: ${{owes}}</div>
 		</script>
 
