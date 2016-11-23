@@ -7,7 +7,6 @@
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 		<title>Shared Expenses</title>
 		<link rel="icon" href="images/favicon-dollar.ico">
-
 		<!-- Bootstrap -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -16,19 +15,9 @@
 	      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 	      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	    <![endif]-->
-	    <!-- Font Awesome -->
-	    <link href="css/font-awesome.min.css" rel="stylesheet">
-
-		<style type="text/css">
-			body {
-				background: #B7E1CE;
-				text-align: center;
-				margin: 100px;
-			}
-			.button {
-				margin: 10px;
-			}
-		</style>
+		<!-- Font Awesome -->
+		<link href="css/font-awesome.min.css" rel="stylesheet">
+		<link href="css/styles.css" rel="stylesheet">
 	</head>
 
 	<body>
@@ -38,17 +27,20 @@
 				<div id="dynamicInput">
 					<div id="roommate-paid"></div>
 				</div>
-				<button class="button add" type="button" value="Add roommate" onClick="addInput();"><i class="fa fa-user-plus fa-lg"></i></button>
+				<button class="btn btn-space btn-add" value="Add roommate" onClick="addInput();"><i class="fa fa-user-plus fa-lg"></i></button>
 			</form>
-			<input class="button calculate" type="submit" name="submit" value="Calculate" onClick="displayPayments();"/>
-			<input id="clear" class="button" type="button" value="Start Over">
+
+			<div class="btn-group" role="group" aria-label="...">
+				<button class="btn btn-space calculate" value="Add roommate" >Calculate</button>
+				<button class="btn btn-space clear" value="Add roommate" >Clear</button>
+			</div>
 		</div><hr>
 
 		<div id="roommate-owes"></div>
 
 		<!-- Handlebars templates -->
 		<script id="roommate-paid-template" type="text/x-handlebars-template">
-			<div>{{name}} has already paid: <input type="number" name="{{name}}" value="{{paid}}"></div>
+			<div>{{name}} has paid: <input type="number" name="{{name}}" value="{{paid}}"></div>
 		</script>
 		<script id="roommate-owes-template" type="text/x-handlebars-template">
 			<div>{{name}} owes: ${{owes}}</div>
@@ -57,8 +49,8 @@
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
-    	<script src="js/bootstrap.min.js"></script>
-    	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
-    	<script src="js/general.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
+		<script src="js/general.js"></script>
 	</body>
 </html>
