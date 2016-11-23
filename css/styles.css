@@ -6,14 +6,22 @@ body {
 
 .btn {
     background-color: #7E55B4;
-    border: 1px solid #A98ECD;
     color: white;
     border-radius: 2px;
 }
 
+.btn:hover {
+    color: white;
+   	background-color: #4D3271;
+
+}
+
 .btn-add {
     background-color: #566CB3 !important;
-    border: 1px solid #8E9DCC !important;
+}
+
+.btn-add:hover {
+    background-color: #334171 !important;
 }
 
 .btn-space {
