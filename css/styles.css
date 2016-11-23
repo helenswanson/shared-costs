@@ -1,5 +1,5 @@
 body {
-	background: #D4EDE2;
+	background: #C5E7D8;
 	text-align: center;
 	margin: 100px;
 }
@@ -9,21 +9,23 @@ body {
     color: white;
     border-radius: 2px;
 }
-
 .btn:hover {
     color: white;
    	background-color: #4D3271;
 
 }
-
+.btn-space {
+	margin: 10px;
+}
 .btn-add {
     background-color: #566CB3 !important;
 }
-
 .btn-add:hover {
     background-color: #334171 !important;
 }
 
-.btn-space {
-	margin: 10px;
+.list-group-item {
+	background-color: #F1F9F5;
+	border: 1px solid #999999;
+	border-radius: 2px !important;	
 }

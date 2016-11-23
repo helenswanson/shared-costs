@@ -38,14 +38,16 @@
 			</div>
 		</div><hr>
 
-		<div id="roommate-owes"></div>
+		<ul class="list-group">
+			<div id="roommate-owes"></div>
+		</ul>
 
 		<!-- Handlebars templates -->
 		<script id="roommate-paid-template" type="text/x-handlebars-template">
 			<div>{{name}} has paid: <input type="number" name="{{name}}" value="{{paid}}"></div>
 		</script>
 		<script id="roommate-owes-template" type="text/x-handlebars-template">
-			<div>{{name}} owes: ${{owes}}</div>
+			<div><li class="list-group-item">{{name}} owes: ${{owes}}</li></div>
 		</script>
 
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
