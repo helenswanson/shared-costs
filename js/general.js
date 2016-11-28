@@ -16,8 +16,8 @@ function initializePage() {
 	inputCounter = roommates.length;
 
 	$.each(roommates, function(index, roommate) {
-		
-		if(roommate.owes >= 0){
+
+		if(roommate.owes <= 0){
 			roommate.owes = "nothing";
 		} else {
 			roommate.owes = "$" + roommate.owes;
@@ -126,10 +126,10 @@ function displayPayments() {
 	$('#roommate-owes').empty();
 	$.each(roommates, function(index, roommate) {
 
-		if(roommate.owes >= 0){
+		if(roommate.owes <= 0){
 			roommate.owes = "nothing";
 		} else {
-			roommate.owes = "$"+roommate.owes;
+			roommate.owes = "$" + roommate.owes;
 		}
 
 		// combine the templateB with roommate payment to create useable HTML
