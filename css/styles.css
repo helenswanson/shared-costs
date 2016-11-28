@@ -18,6 +18,8 @@ body {
 }
 .btn-add {
     background-color: #566CB3 !important;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 .btn-add:hover {
     background-color: #334171 !important;

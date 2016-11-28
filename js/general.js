@@ -65,7 +65,7 @@ function getRoommates() {
 			roommates.push(roommate);
 		}
 	});
-	// console.log('roommates: ' + roommates);
+	console.log('roommates: ' + roommates);
 	return roommates;				
 }
 
@@ -79,14 +79,14 @@ function getAveragePaid(roommates) {
 			count += 1;
 		}
 	});
-	// console.log("sum/count = " + sum/count);
+	console.log("sum/count = " + sum/count);
 	return sum/count;
 }
 
 function updateLocalStorage(roommates) {
 	// Put the object into storage
 	localStorage.setItem('roommates', JSON.stringify(roommates));
-	// console.log('local storage: ', JSON.stringify(roommates));
+	console.log('local storage: ', JSON.stringify(roommates));
 }
 
 function getStoredRoomates() {
@@ -99,7 +99,7 @@ function getStoredRoomates() {
 								{name: "Roommate 2", paid: "", owes: ""}
 							];
 	}	
-	// console.log('storedRoommates: ', storedRoommates);
+	console.log('storedRoommates: ', storedRoommates);
 	return storedRoommates;
 }
 
@@ -107,14 +107,28 @@ function setFinalPayments(roommates) {
 	var averagePaid = getAveragePaid(roommates);
 
 	$.each(roommates, function(key, roommate) {
-		roommate.owes = averagePaid-roommate.paid/1;
+		roommate.owes = (averagePaid-roommate.paid/1).toFixed(2);;
 	});
 }
+
+// function findWhoOwesMoney() {
+
+// 	$.each(roommates, function(key, roommate) {
+// 		roommate.owes = averagePaid-roommate.paid/1;
+// 	});
+
+
+// }
 
 function displayPayments() {
 	var roommates = getRoommates();
 	setFinalPayments(roommates);
 	updateLocalStorage(roommates);
+
+	// findWhoOwesMoney(roommates);
+
+
+
 
 	$('#roommate-owes').empty();
 	$.each(roommates, function(index, roommate) {
