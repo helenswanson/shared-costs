@@ -17,11 +17,11 @@ function initializePage() {
 
 	$.each(roommates, function(index, roommate) {
 
-		if(roommate.owes <= 0){
-			roommate.owes = "nothing";
-		} else {
-			roommate.owes = "$" + roommate.owes;
-		}
+		// if(roommate.owes <= 0){
+		// 	roommate.owes = "nothing";
+		// } else {
+		// 	roommate.owes = "$" + roommate.owes;
+		// }
 
 		// combine the templateA with individual roommate to create useable HTML
 		var roommatePaidHTML = roommatePaidTemplate(roommate);
@@ -49,7 +49,7 @@ function addInput(){
 			alert("You have reached the limit of adding " + inputCounter + " roommates");
 	}
 	else {
-		var roommate = {name: "Roommate " + (inputCounter + 1), paid: "", owes: ""};
+		var roommate = {name: "Roommate " + (inputCounter + 1), paid: "", owes: "", payments:[], stillOwes:""};
 		// combine the template with roommate to create useable HTML
 		var html = roommatePaidTemplate(roommate);
 		// append your newly created html
@@ -102,35 +102,55 @@ function getStoredRoomates() {
 		storedRoommates = JSON.parse(storedRoommates);
 	} else {
 		// set default data to use in the template
-		storedRoommates = 	[	{name: "Roommate 1", paid: "", owes: ""},
-								{name: "Roommate 2", paid: "", owes: ""}
+		storedRoommates = 	[	{name: "Roommate 1", paid: "", owes: "", payments:[], stillOwes:""},
+								{name: "Roommate 2", paid: "", owes: "", payments:[], stillOwes:""}
 							];
 	}	
 	console.log('storedRoommates: ', storedRoommates);
 	return storedRoommates;
 }
 
-function setFinalPayments(roommates) {
+
+
+
+function setOwes(roommates) {
 	var averagePaid = getAveragePaid(roommates);
 
 	$.each(roommates, function(key, roommate) {
 		roommate.owes = (averagePaid-roommate.paid/1).toFixed(2);
+		roommate.stillOwes = roommate.owes;
 	});
+
+	// Sort by price high to low
+	roommates.sort(sort_by('owes', true, parseInt));
+}
+
+// reusable sort for any field type
+var sort_by = function(field, reverse, primer){
+	var key = primer ? 	function(x) {return primer(x[field])} : 
+						function(x) {return x[field]};
+
+	reverse = !reverse ? 1 : -1;
+
+	return function (a, b) {
+		return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+	} 
 }
 
 function displayPayments() {
 	var roommates = getRoommates();
-	setFinalPayments(roommates);
+	setOwes(roommates);
 	updateLocalStorage(roommates);
 
 	$('#roommate-owes').empty();
 	$.each(roommates, function(index, roommate) {
 
-		if(roommate.owes <= 0){
-			roommate.owes = "nothing";
-		} else {
-			roommate.owes = "$" + roommate.owes;
-		}
+		// if(roommate.owes <= 0){
+		// 	roommate.owes = "nothing";
+		// } else {
+		// 	roommate.owes = "$" + roommate.owes;
+		// 	// example: Roommate 1 owes $15.00 total, $5.00 to Roommate 2 and $10.00 to Roommate 3
+		// }
 
 		// combine the templateB with roommate payment to create useable HTML
 		var html = roommateOwesTemplate(roommate);
