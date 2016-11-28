@@ -16,6 +16,13 @@ function initializePage() {
 	inputCounter = roommates.length;
 
 	$.each(roommates, function(index, roommate) {
+		
+		if(roommate.owes >= 0){
+			roommate.owes = "nothing";
+		} else {
+			roommate.owes = "$" + roommate.owes;
+		}
+
 		// combine the templateA with individual roommate to create useable HTML
 		var roommatePaidHTML = roommatePaidTemplate(roommate);
 		// append your newly created html
@@ -107,7 +114,7 @@ function setFinalPayments(roommates) {
 	var averagePaid = getAveragePaid(roommates);
 
 	$.each(roommates, function(key, roommate) {
-		roommate.owes = (averagePaid-roommate.paid/1).toFixed(2);;
+		roommate.owes = (averagePaid-roommate.paid/1).toFixed(2);
 	});
 }
 
@@ -118,6 +125,13 @@ function displayPayments() {
 
 	$('#roommate-owes').empty();
 	$.each(roommates, function(index, roommate) {
+
+		if(roommate.owes >= 0){
+			roommate.owes = "nothing";
+		} else {
+			roommate.owes = "$"+roommate.owes;
+		}
+
 		// combine the templateB with roommate payment to create useable HTML
 		var html = roommateOwesTemplate(roommate);
 		// append your newly created html
@@ -125,7 +139,7 @@ function displayPayments() {
 	});
 }
 
-// Start over button
+// Clear button
 $("#clear").click(function(){
 	window.localStorage.clear();
 	initializePage();
