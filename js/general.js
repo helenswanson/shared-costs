@@ -15,6 +15,9 @@ function initializePage() {
 	// counter for addInput
 	inputCounter = roommates.length;
 
+	// reorder roommates by name
+	roommates.sort(sort_by('name', false, function(a){return a.toUpperCase()}));
+
 	$.each(roommates, function(index, roommate) {
 
 		// if(roommate.owes <= 0){
@@ -27,8 +30,8 @@ function initializePage() {
 		var roommatePaidHTML = roommatePaidTemplate(roommate);
 		// append your newly created html
 		$('#roommate-paid').append(roommatePaidHTML);
-
 		if (isStalePageLoad()) {
+			// reorder roommates
 			var roommateOwesHTML = roommateOwesTemplate(roommate);
 			$('#roommate-owes').append(roommateOwesHTML);
 		}
@@ -110,9 +113,6 @@ function getStoredRoomates() {
 	return storedRoommates;
 }
 
-
-
-
 function setOwes(roommates) {
 	var averagePaid = getAveragePaid(roommates);
 
@@ -121,9 +121,23 @@ function setOwes(roommates) {
 		roommate.stillOwes = roommate.owes;
 	});
 
-	// Sort by price high to low
+	// Sort by owes high to low (debtors to creditors)
 	roommates.sort(sort_by('owes', true, parseInt));
+	console.log('set Owes : ', roommates.sort(sort_by('owes', true, parseInt)));
+
 }
+
+function setPayments(roommates) {
+
+}
+
+// order roommates from high to low
+// lowest debtors goes to highest creditors
+// --> if lowest debtor stillOwes == 0, move on to next lowest debtor
+// keep doing this until
+// --> if doing this causes highest creditor's stillOwes > 0
+// --> subtract stillOwes amount from lowest debtor's stillOwes and
+// --> move on to next highest creditor for payments
 
 // reusable sort for any field type
 var sort_by = function(field, reverse, primer){
@@ -140,7 +154,14 @@ var sort_by = function(field, reverse, primer){
 function displayPayments() {
 	var roommates = getRoommates();
 	setOwes(roommates);
+	setPayments(roommates);
+
+
 	updateLocalStorage(roommates);
+
+
+
+
 
 	$('#roommate-owes').empty();
 	$.each(roommates, function(index, roommate) {
