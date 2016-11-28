@@ -111,24 +111,10 @@ function setFinalPayments(roommates) {
 	});
 }
 
-// function findWhoOwesMoney() {
-
-// 	$.each(roommates, function(key, roommate) {
-// 		roommate.owes = averagePaid-roommate.paid/1;
-// 	});
-
-
-// }
-
 function displayPayments() {
 	var roommates = getRoommates();
 	setFinalPayments(roommates);
 	updateLocalStorage(roommates);
-
-	// findWhoOwesMoney(roommates);
-
-
-
 
 	$('#roommate-owes').empty();
 	$.each(roommates, function(index, roommate) {
