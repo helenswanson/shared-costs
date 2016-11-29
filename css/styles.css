@@ -29,19 +29,12 @@ body {
     border-top: none;
 }
 
-
 .list-group{
-	width: 60%;
+	width: 70%;
 	margin: 0 auto
 }
 .list-group-item {
 	background-color: #F1F9F5;
 	border: 1px solid #999999;
 	border-radius: 2px !important;	
-}
-.list-group-item .name {
-
-}
-.list-group-item .owes {
-	
 }
