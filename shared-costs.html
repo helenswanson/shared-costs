@@ -47,8 +47,20 @@
 			<div>{{name}} has paid: <input type="number" name="{{name}}" value="{{paid}}"></div>
 		</script>
 		<script id="roommate-owes-template" type="text/x-handlebars-template">
-			<div><li class="list-group-item">{{name}} owes: {{owes}}</li></div>
+			<div><li class="list-group-item">
+				<span class="name">{{name}} </span> 
+				{{#if payments}}
+					{{#each payments}}
+						owes <span class="owes">{{name}} ${{amount}}</span><br>
+					{{/each}}
+				{{else}}
+					<span class="owes">owes nothing</span>
+				{{/if}}
+
+			</li></div>
 		</script>
+
+
 
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>

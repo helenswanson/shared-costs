@@ -19,19 +19,11 @@ function initializePage() {
 	roommates.sort(sort_by('name', false, function(a){return a.toUpperCase()}));
 
 	$.each(roommates, function(index, roommate) {
-
-		// if(roommate.owes <= 0){
-		// 	roommate.owes = "nothing";
-		// } else {
-		// 	roommate.owes = "$" + roommate.owes;
-		// }
-
-		// combine the templateA with individual roommate to create useable HTML
+		// combine the template with individual roommate to create useable HTML
 		var roommatePaidHTML = roommatePaidTemplate(roommate);
 		// append your newly created html
 		$('#roommate-paid').append(roommatePaidHTML);
 		if (isStalePageLoad()) {
-			// reorder roommates
 			var roommateOwesHTML = roommateOwesTemplate(roommate);
 			$('#roommate-owes').append(roommateOwesHTML);
 		}
@@ -45,21 +37,77 @@ function isStalePageLoad() {
 	return storedRoommates? true: false;
 }
 
+function doPaymentsRemain(roommates) {
+	var paymentsRemaining = 0;
+
+	$.each(roommates, function(key, roommate) {
+		if(roommate.stillOwes/1 !== 0) {
+			paymentsRemaining += 1;
+		} 
+	});	
+										console.log("paymentsRemaining? " + (paymentsRemaining > 0? true: false));
+	return (paymentsRemaining > 0? true: false);
+}
+
+function addDebtorPayment(maxCreditor, maxDebtor, paymentAmount) {
+	var newPayment = {name: maxCreditor.name, payment: paymentAmount};
+	maxDebtor.payments.push(newPayment);
+	// Sort by name, case-insensitive, A-Z
+	maxDebtor.payments.sort(sort_by('name', false, function(a){return a.toUpperCase()}));
+										console.log("newPayment: {name: " + newPayment.name + ", payment: " + newPayment.payment + "}");
+										console.log("maxDebtor.payments: ", maxDebtor.payments);
+}
+
 function addInput(){
 	var limit = 9;
 
 	if (inputCounter == limit)  {
-			alert("You have reached the limit of adding " + inputCounter + " roommates");
-	}
-	else {
+		alert("You have reached the limit of adding " + inputCounter + " roommates");
+	} else {
 		var roommate = {name: "Roommate " + (inputCounter + 1), paid: ""};
-		// combine the template with roommate to create useable HTML
+		// combine the template with individual roommate to create useable HTML
 		var html = roommatePaidTemplate(roommate);
 		// append your newly created html
 		$('#roommate-paid').append(html);
 
 		inputCounter += 1;
 	}
+}
+
+function getAveragePaid(roommates) {
+	var sum = 0;
+	var count = 0;
+
+	$.each(roommates, function(key, roommate) {
+		if(roommate.paid !== "") {
+			sum += roommate.paid/1;
+			count += 1;
+		}
+	});
+
+	return sum/count;
+}
+
+function getCreditorStillOwed(maxCreditor, maxDebtor) {
+	var creditorStillOwed = maxCreditor.stillOwes/1 + maxDebtor.stillOwes/1;
+
+	return creditorStillOwed;
+}
+
+function getMaxCreditor(roommates) {
+	// min owes = maxCreditor
+	var maxCreditorOwes = Math.min.apply(Math, roommates.map(function(roommate) { return roommate.stillOwes; }))
+	var maxCreditorArray = roommates.filter(function(roommate) { return roommate.stillOwes == maxCreditorOwes; });
+
+	return maxCreditorArray[0];
+}
+
+function getMaxDebtor(roommates) {
+	// max owes = maxDebtor
+	var maxDebtorOwes = Math.max.apply(Math, roommates.map(function(roommate) { return roommate.stillOwes; }));
+	var maxDebtorArray = roommates.filter(function(roommate) { return roommate.stillOwes == maxDebtorOwes; });
+
+	return maxDebtorArray[0];
 }
 
 function getRoommates() {
@@ -80,26 +128,6 @@ function getRoommates() {
 	});
 										console.log('roommates: ', roommates);
 	return roommates;				
-}
-
-function getAveragePaid(roommates) {
-	var sum = 0;
-	var count = 0;
-
-	$.each(roommates, function(key, roommate) {
-		if(roommate.paid !== "") {
-			sum += roommate.paid/1;
-			count += 1;
-		}
-	});
-
-	return sum/count;
-}
-
-function updateLocalStorage(roommates) {
-	// Put the object into storage
-	localStorage.setItem('roommates', JSON.stringify(roommates));
-										console.log('local storage: ', JSON.stringify(roommates));
 }
 
 function getStoredRoomates() {
@@ -128,49 +156,6 @@ function setOwes(roommates) {
 										console.log('set Owes: ', roommates.sort(sort_by('name', false, function(a){return a.toUpperCase()})));
 }
 
-function getCreditorStillOwed(maxCreditor, maxDebtor) {
-	var creditorStillOwed = maxCreditor.stillOwes/1 + maxDebtor.stillOwes/1;
-
-	return creditorStillOwed;
-}
-
-function addDebtorPayment(maxCreditor, maxDebtor, paymentAmount) {
-	var newPayment = {name: maxCreditor.name, amount: paymentAmount};
-	maxDebtor.payments.push(newPayment);
-	// Sort by name, case-insensitive, A-Z
-	maxDebtor.payments.sort(sort_by('name', false, function(a){return a.toUpperCase()}));
-										console.log("newPayment: {name: " + newPayment.name + ", amount: " + newPayment.amount + "}");
-										console.log("maxDebtor.payments: ", maxDebtor.payments);
-}
-
-function getMaxCreditor(roommates) {
-	// min owes = maxCreditor
-	var maxCreditorOwes = Math.min.apply(Math, roommates.map(function(roommate) { return roommate.stillOwes; }))
-	var maxCreditorArray = roommates.filter(function(roommate) { return roommate.stillOwes == maxCreditorOwes; });
-
-	return maxCreditorArray[0];
-}
-
-function getMaxDebtor(roommates) {
-	// max owes = maxDebtor
-	var maxDebtorOwes = Math.max.apply(Math, roommates.map(function(roommate) { return roommate.stillOwes; }));
-	var maxDebtorArray = roommates.filter(function(roommate) { return roommate.stillOwes == maxDebtorOwes; });
-
-	return maxDebtorArray[0];
-}
-
-function doPaymentsRemain(roommates) {
-	var paymentsRemaining = 0;
-
-	$.each(roommates, function(key, roommate) {
-		if(roommate.stillOwes/1 !== 0) {
-			paymentsRemaining += 1;
-		} 
-	});	
-										console.log("paymentsRemaining? " + (paymentsRemaining > 0? true: false));
-	return (paymentsRemaining > 0? true: false);
-}
-
 function setPayments(roommates) {
 	while(doPaymentsRemain(roommates)) {
 		var maxCreditor = getMaxCreditor(roommates);
@@ -196,6 +181,12 @@ function setPayments(roommates) {
 	}
 }
 
+function updateLocalStorage(roommates) {
+	// Put the object into storage
+	localStorage.setItem('roommates', JSON.stringify(roommates));
+										console.log('local storage: ', JSON.stringify(roommates));
+}
+
 // reusable sort for any field type
 var sort_by = function(field, reverse, primer){
 	var key = primer ? 	function(x) {return primer(x[field])} : 
@@ -216,14 +207,6 @@ function displayPayments() {
 
 	$('#roommate-owes').empty();
 	$.each(roommates, function(index, roommate) {
-
-		// if(roommate.owes <= 0){
-		// 	roommate.owes = "nothing";
-		// } else {
-		// 	roommate.owes = "$" + roommate.owes;
-		// 	// example: Roommate 1 owes $15.00 total, $5.00 to Roommate 2 and $10.00 to Roommate 3
-		// }
-
 		// combine the templateB with roommate payment to create useable HTML
 		var html = roommateOwesTemplate(roommate);
 		// append your newly created html
