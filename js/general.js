@@ -155,21 +155,21 @@ function addDebtorPayment(maxCreditor, maxDebtor, paymentAmount) {
 function getMaxCreditor(roommates) {
 	// min owes = maxCreditor
 	var maxCreditorOwes = Math.min.apply(Math, roommates.map(function(roommate) { return roommate.owes; }))
-	var result = roommates.filter(function(roommate) { return roommate.owes == maxCreditorOwes; });
+	var maxCreditorArray = roommates.filter(function(roommate) { return roommate.owes == maxCreditorOwes; });
 
-	console.log("getMaxCreditor: ", result[0]);
+	console.log("getMaxCreditor: ", maxCreditorArray[0]);
 
-	return result[0];
+	return maxCreditorArray[0];
 }
 
 function getMaxDebtor(roommates) {
 	// max owes = maxDebtor
 	var maxDebtorOwes = Math.max.apply(Math, roommates.map(function(roommate) { return roommate.owes; }));
-	var result = roommates.filter(function(roommate) { return roommate.owes == maxDebtorOwes; });
+	var maxDebtorArray = roommates.filter(function(roommate) { return roommate.owes == maxDebtorOwes; });
 
-	console.log("getMaxDebtor: ", result[0]);
+	console.log("getMaxDebtor: ", maxDebtorArray[0]);
 
-	return result[0];
+	return maxDebtorArray[0];
 }
 
 
@@ -191,8 +191,6 @@ function setPayments(roommates) {
 	// while selected maxCreditor is still owed money...
 	// while(maxCreditor.stillOwes < 0) {
 		var creditorStillOwed = getCreditorStillOwed(maxCreditor, maxDebtor);
-		var maxCreditorStillOwes = maxCreditor.stillOwes/1;
-		var maxDebtorStillOwes = maxDebtor.stillOwes/1;
 
 		if(creditorStillOwed < 0) {
 			addDebtorPayment(maxCreditor, maxDebtor, maxDebtor.stillOwes/1);
