@@ -78,7 +78,7 @@ function getRoommates() {
 			roommates.push(roommate);
 		}
 	});
-	console.log('roommates: ', roommates);
+										console.log('roommates: ', roommates);
 	return roommates;				
 }
 
@@ -92,14 +92,14 @@ function getAveragePaid(roommates) {
 			count += 1;
 		}
 	});
-	console.log("sum/count = " + sum/count);
+										console.log("sum/count = " + sum/count);
 	return sum/count;
 }
 
 function updateLocalStorage(roommates) {
 	// Put the object into storage
 	localStorage.setItem('roommates', JSON.stringify(roommates));
-	console.log('local storage: ', JSON.stringify(roommates));
+										console.log('local storage: ', JSON.stringify(roommates));
 }
 
 function getStoredRoomates() {
@@ -112,7 +112,7 @@ function getStoredRoomates() {
 								{name: "Roommate 2", paid: "", owes: "", payments: [], stillOwes:""}
 							];
 	}	
-	console.log('storedRoommates: ', storedRoommates);
+										console.log('storedRoommates: ', storedRoommates);
 	return storedRoommates;
 }
 
@@ -125,21 +125,20 @@ function setOwes(roommates) {
 	});
 	// Sort owes by high to low (debtors to creditors)
 	roommates.sort(sort_by('owes', true, parseInt));
-	console.log('set Owes : ', roommates.sort(sort_by('owes', true, parseInt)));
+										console.log('set Owes : ', roommates.sort(sort_by('owes', true, parseInt)));
 }
 
 function getRoommateFromOwes(roommates, owes) {
 	// var result = $.grep(roommates, function(roommate){ return roommate.owes == owes; });
 	var result = roommates.filter(function(roommate) { return roommate.owes == owes; });
-
-	console.log("getRoommateFromOwes: ", result[0]);
+										console.log("getRoommateFromOwes: ", result[0]);
 
 	return result[0];
 }
 
 function getCreditorStillOwed(maxCreditor, maxDebtor) {
 	var creditorStillOwes = maxCreditor.stillOwes/1 + maxDebtor.stillOwes/1;
-	console.log("creditorStillOwes: " + creditorStillOwes);
+										console.log("creditorStillOwes: " + creditorStillOwes);
 
 	return creditorStillOwes;
 }
@@ -147,17 +146,15 @@ function getCreditorStillOwed(maxCreditor, maxDebtor) {
 function addDebtorPayment(maxCreditor, maxDebtor, paymentAmount) {
 	var newPayment = {name: maxCreditor.name, amount: paymentAmount};
 	maxDebtor.payments.push(newPayment);
-
-	console.log("newPayment: {name: " + newPayment.name + ", amount: " + newPayment.amount + "}");
-	console.log("maxDebtor.payments: ", maxDebtor.payments);
+										console.log("newPayment: {name: " + newPayment.name + ", amount: " + newPayment.amount + "}");
+										console.log("maxDebtor.payments: ", maxDebtor.payments);
 }
 
 function getMaxCreditor(roommates) {
 	// min owes = maxCreditor
 	var maxCreditorOwes = Math.min.apply(Math, roommates.map(function(roommate) { return roommate.owes; }))
 	var maxCreditorArray = roommates.filter(function(roommate) { return roommate.owes == maxCreditorOwes; });
-
-	console.log("getMaxCreditor: ", maxCreditorArray[0]);
+										console.log("getMaxCreditor: ", maxCreditorArray[0]);
 
 	return maxCreditorArray[0];
 }
@@ -166,8 +163,7 @@ function getMaxDebtor(roommates) {
 	// max owes = maxDebtor
 	var maxDebtorOwes = Math.max.apply(Math, roommates.map(function(roommate) { return roommate.owes; }));
 	var maxDebtorArray = roommates.filter(function(roommate) { return roommate.owes == maxDebtorOwes; });
-
-	console.log("getMaxDebtor: ", maxDebtorArray[0]);
+										console.log("getMaxDebtor: ", maxDebtorArray[0]);
 
 	return maxDebtorArray[0];
 }
