@@ -92,7 +92,7 @@ function getAveragePaid(roommates) {
 			count += 1;
 		}
 	});
-										console.log("sum/count = " + sum/count);
+
 	return sum/count;
 }
 
@@ -123,27 +123,22 @@ function setOwes(roommates) {
 		roommate.owes = (averagePaid-roommate.paid/1).toFixed(2);
 		roommate.stillOwes = roommate.owes;
 	});
-	// Sort owes by high to low (debtors to creditors)
-	roommates.sort(sort_by('owes', true, parseInt));
-										console.log('set Owes : ', roommates.sort(sort_by('owes', true, parseInt)));
-}
-
-function getRoommateFromOwes(roommates, owes) {
-	// var result = $.grep(roommates, function(roommate){ return roommate.owes == owes; });
-	var result = roommates.filter(function(roommate) { return roommate.owes == owes; });
-										console.log("getRoommateFromOwes: ", result[0]);
-	return result[0];
+	// Sort by name, case-insensitive, A-Z
+	roommates.sort(sort_by('name', false, function(a){return a.toUpperCase()}));
+										console.log('set Owes: ', roommates.sort(sort_by('name', false, function(a){return a.toUpperCase()})));
 }
 
 function getCreditorStillOwed(maxCreditor, maxDebtor) {
-	var creditorStillOwes = maxCreditor.stillOwes/1 + maxDebtor.stillOwes/1;
-										console.log("creditorStillOwes: " + creditorStillOwes);
-	return creditorStillOwes;
+	var creditorStillOwed = maxCreditor.stillOwes/1 + maxDebtor.stillOwes/1;
+
+	return creditorStillOwed;
 }
 
 function addDebtorPayment(maxCreditor, maxDebtor, paymentAmount) {
 	var newPayment = {name: maxCreditor.name, amount: paymentAmount};
 	maxDebtor.payments.push(newPayment);
+	// Sort by name, case-insensitive, A-Z
+	maxDebtor.payments.sort(sort_by('name', false, function(a){return a.toUpperCase()}));
 										console.log("newPayment: {name: " + newPayment.name + ", amount: " + newPayment.amount + "}");
 										console.log("maxDebtor.payments: ", maxDebtor.payments);
 }
@@ -152,7 +147,6 @@ function getMaxCreditor(roommates) {
 	// min owes = maxCreditor
 	var maxCreditorOwes = Math.min.apply(Math, roommates.map(function(roommate) { return roommate.stillOwes; }))
 	var maxCreditorArray = roommates.filter(function(roommate) { return roommate.stillOwes == maxCreditorOwes; });
-										console.log("getMaxCreditor: ", maxCreditorArray[0]);
 
 	return maxCreditorArray[0];
 }
@@ -161,7 +155,6 @@ function getMaxDebtor(roommates) {
 	// max owes = maxDebtor
 	var maxDebtorOwes = Math.max.apply(Math, roommates.map(function(roommate) { return roommate.stillOwes; }));
 	var maxDebtorArray = roommates.filter(function(roommate) { return roommate.stillOwes == maxDebtorOwes; });
-										console.log("getMaxDebtor: ", maxDebtorArray[0]);
 
 	return maxDebtorArray[0];
 }
@@ -180,7 +173,6 @@ function doPaymentsRemain(roommates) {
 
 function setPayments(roommates) {
 	while(doPaymentsRemain(roommates)) {
-		// determine maxCreditor and maxDebtor
 		var maxCreditor = getMaxCreditor(roommates);
 		var maxDebtor = getMaxDebtor(roommates);
 										console.log("maxCreditor: ", maxCreditor);
