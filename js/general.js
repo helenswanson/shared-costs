@@ -45,7 +45,7 @@ function doPaymentsRemain(roommates) {
 			paymentsRemaining += 1;
 		} 
 	});	
-										console.log("paymentsRemaining? " + (paymentsRemaining > 0? true: false));
+										// console.log("paymentsRemaining? " + (paymentsRemaining > 0? true: false));
 	return (paymentsRemaining > 0? true: false);
 }
 
@@ -54,8 +54,8 @@ function addDebtorPayment(maxCreditor, maxDebtor, paymentAmount) {
 	maxDebtor.payments.push(newPayment);
 	// Sort by name, case-insensitive, A-Z
 	maxDebtor.payments.sort(sort_by('name', false, function(a){return a.toUpperCase()}));
-										console.log("newPayment: {name: " + newPayment.name + ", payment: " + newPayment.payment + "}");
-										console.log("maxDebtor.payments: ", maxDebtor.payments);
+										// console.log("newPayment: {name: " + newPayment.name + ", payment: " + newPayment.payment + "}");
+										// console.log("maxDebtor.payments: ", maxDebtor.payments);
 }
 
 function addInput(){
@@ -126,7 +126,7 @@ function getRoommates() {
 			roommates.push(roommate);
 		}
 	});
-										console.log('roommates: ', roommates);
+										// console.log('roommates: ', roommates);
 	return roommates;				
 }
 
@@ -140,7 +140,7 @@ function getStoredRoomates() {
 								{name: "Roommate 2", paid: "", owes: "", payments: [], stillOwes:""}
 							];
 	}	
-										console.log('storedRoommates: ', storedRoommates);
+										// console.log('storedRoommates: ', storedRoommates);
 	return storedRoommates;
 }
 
@@ -153,30 +153,30 @@ function setOwes(roommates) {
 	});
 	// Sort by name, case-insensitive, A-Z
 	roommates.sort(sort_by('name', false, function(a){return a.toUpperCase()}));
-										console.log('set Owes: ', roommates.sort(sort_by('name', false, function(a){return a.toUpperCase()})));
+										// console.log('set Owes: ', roommates.sort(sort_by('name', false, function(a){return a.toUpperCase()})));
 }
 
 function setPayments(roommates) {
 	while(doPaymentsRemain(roommates)) {
 		var maxCreditor = getMaxCreditor(roommates);
 		var maxDebtor = getMaxDebtor(roommates);
-										console.log("maxCreditor: ", maxCreditor);
-										console.log("maxDebtor: ", maxDebtor);
+										// console.log("maxCreditor: ", maxCreditor);
+										// console.log("maxDebtor: ", maxDebtor);
 		var creditorStillOwed = getCreditorStillOwed(maxCreditor, maxDebtor);
 
 		if(creditorStillOwed <= 0) {
 			addDebtorPayment(maxCreditor, maxDebtor, maxDebtor.stillOwes/1);
 			maxCreditor.stillOwes = maxCreditor.stillOwes/1 + maxDebtor.stillOwes/1;
 			maxDebtor.stillOwes = 0;
-										console.log("maxCreditor is now owed (1): " + maxCreditor.stillOwes/1);
-										console.log("maxDebtor now owes (1): " + maxDebtor.stillOwes/1);
+										// console.log("maxCreditor is now owed (1): " + maxCreditor.stillOwes/1);
+										// console.log("maxDebtor now owes (1): " + maxDebtor.stillOwes/1);
 		} else if (creditorStillOwed > 0) {
 			var diff = maxDebtor.stillOwes/1 + maxCreditor.stillOwes/1;
 			addDebtorPayment(maxCreditor, maxDebtor, diff);
 			maxCreditor.stillOwes = maxCreditor.stillOwes/1 + diff/1;
 			maxDebtor.stillOwes = maxDebtor.stillOwes/1 - diff/1;
-										console.log("maxCreditor is now owed (2): " + maxCreditor.stillOwes/1);
-										console.log("maxDebtor now owes (2): " + maxDebtor.stillOwes/1);
+										// console.log("maxCreditor is now owed (2): " + maxCreditor.stillOwes/1);
+										// console.log("maxDebtor now owes (2): " + maxDebtor.stillOwes/1);
 		}
 	}
 }
@@ -184,7 +184,7 @@ function setPayments(roommates) {
 function updateLocalStorage(roommates) {
 	// Put the object into storage
 	localStorage.setItem('roommates', JSON.stringify(roommates));
-										console.log('local storage: ', JSON.stringify(roommates));
+										// console.log('local storage: ', JSON.stringify(roommates));
 }
 
 // reusable sort for any field type
