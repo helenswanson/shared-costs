@@ -22,15 +22,17 @@ body {
 	padding-right: 50px;
 }
 .btn-add:hover {
-	background-color: #202946 !important;
-	color: white;
+	background-color: #192138 !important;
 }
 .btn-expense {
 	background-color: #566CB3 !important;
 }
 .btn-expense:hover {
-	background-color: #334171 !important;
-	color: white;
+	background-color: #2C3963 !important;
+}
+
+table {
+	text-align: left;
 
 }
 
