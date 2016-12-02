@@ -16,6 +16,12 @@ body {
 .btn-space {
 	margin: 10px;
 }
+.btn-expense {
+	background-color: #566CB3 !important;
+}
+.btn-expense:hover {
+	background-color: #334171 !important;
+}
 .btn-add {
 	background-color: #334171 !important;
 	padding-left: 50px;
@@ -24,16 +30,9 @@ body {
 .btn-add:hover {
 	background-color: #192138 !important;
 }
-.btn-expense {
-	background-color: #566CB3 !important;
-}
-.btn-expense:hover {
-	background-color: #2C3963 !important;
-}
 
 table {
 	text-align: left;
-
 }
 
 .table>tbody>tr>td {
