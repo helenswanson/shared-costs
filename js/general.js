@@ -59,7 +59,7 @@ function addDebtorPayment(maxCreditor, maxDebtor, paymentAmount) {
 }
 
 function addExpense(){
-	
+
 }
 
 function addRoommate(){
@@ -121,7 +121,7 @@ function getRoommates() {
 
 	$inputs.each(function() {
 		var roommate = 	{	name: this.name,
-							paid: $(this).val(),
+							paid: [$(this).val()],
 							owes: "",
 							payments: [],
 							stillOwes: ""
@@ -140,8 +140,8 @@ function getStoredRoomates() {
 		storedRoommates = JSON.parse(storedRoommates);
 	} else {
 		// set default data to use in the template
-		storedRoommates = 	[	{name: "Roommate 1", paid: "", owes: "", payments: [], stillOwes:""},
-								{name: "Roommate 2", paid: "", owes: "", payments: [], stillOwes:""}
+		storedRoommates = 	[	{name: "Roommate 1", paid: [], owes: "", payments: [], stillOwes:""},
+								{name: "Roommate 2", paid: [], owes: "", payments: [], stillOwes:""}
 							];
 	}	
 										// console.log('storedRoommates: ', storedRoommates);
