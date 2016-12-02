@@ -29,7 +29,7 @@
 				<div id="dynamicInput">
 					<div id="roommate-paid"></div>
 				</div>
-				<button type="button" class="btn btn-space btn-add" value="Add roommate" onClick="addInput();"><i class="fa fa-user-plus fa-lg"></i></button>
+				<button type="button" class="btn btn-space btn-add" value="Add roommate" onClick="addRoommate();"><i class="fa fa-user-plus fa-lg"></i></button>
 			</form>
 
 			<div class="btn-group" role="group" aria-label="...">
@@ -47,6 +47,7 @@
 		<!-- Handlebars templates -->
 		<script id="roommate-paid-template" type="text/x-handlebars-template">
 			<div>{{name}} has paid: <input type="number" name="{{name}}" value="{{paid}}"></div>
+			<button type="button" class="btn btn-space btn-expense" value="Add Expense" onClick="addExpense();">Add Expense</button>
 		</script>
 		<script id="roommate-owes-template" type="text/x-handlebars-template">
 			<table class="table">

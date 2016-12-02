@@ -6,14 +6,14 @@ var owesSource = $("#roommate-owes-template").html();
 var roommatePaidTemplate = Handlebars.compile(paidSource);
 var roommateOwesTemplate = Handlebars.compile(owesSource);
 
-var inputCounter = 0;
+var roommateCounter = 0;
 
 function initializePage() {
 	$('#roommate-paid').empty();
 	$('#roommate-owes').empty();
 	var roommates = getStoredRoomates();
-	// counter for addInput
-	inputCounter = roommates.length;
+	// counter for addRoommate
+	roommateCounter = roommates.length;
 
 	// reorder roommates by name
 	roommates.sort(sort_by('name', false, function(a){return a.toUpperCase()}));
@@ -58,19 +58,23 @@ function addDebtorPayment(maxCreditor, maxDebtor, paymentAmount) {
 										// console.log("maxDebtor.payments: ", maxDebtor.payments);
 }
 
-function addInput(){
+function addExpense(){
+	
+}
+
+function addRoommate(){
 	var limit = 9;
 
-	if (inputCounter == limit)  {
-		alert("You have reached the limit of adding " + inputCounter + " roommates");
+	if (roommateCounter == limit)  {
+		alert("You have reached the limit of adding " + roommateCounter + " roommates");
 	} else {
-		var roommate = {name: "Roommate " + (inputCounter + 1), paid: ""};
+		var roommate = {name: "Roommate " + (roommateCounter + 1), paid: ""};
 		// combine the template with individual roommate to create useable HTML
 		var html = roommatePaidTemplate(roommate);
 		// append your newly created html
 		$('#roommate-paid').append(html);
 
-		inputCounter += 1;
+		roommateCounter += 1;
 	}
 }
 
