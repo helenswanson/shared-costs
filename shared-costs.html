@@ -61,16 +61,16 @@
 				</tr>
 			</table> -->
 			<div id={{id}}>
-				<span>{{name}} has paid </span>
+				<div>{{name}} has paid </div>
 				<span class="roommate-expenses"></span>
 				<button type="button" class="btn btn-space btn-expense" value="Add Expense" onClick="addExpense('{{id}}');"><i class="fa fa-cart-plus fa-lg"></i></button>
 			</div>
 		</script>
 
 		<script id="roommate-expense-template"  type="text/x-handlebars-template">
-			<span>
+			<div>
 				<input type="number" value="{{amount}}"> for <input type="text" value="{{item}}">
-			</span>
+			</div>
 		</script>
 
 		<script id="roommate-owes-template" type="text/x-handlebars-template">

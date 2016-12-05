@@ -3,6 +3,9 @@ body {
 	text-align: center;
 	margin: 100px;
 }
+.entry {
+	width: 100%;
+}
 
 .btn {
 	background-color: #7E55B4;
