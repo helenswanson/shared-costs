@@ -45,7 +45,7 @@
 		</div>
 
 		<!-- Handlebars templates -->
-		<script id="roommate-paid-template" type="text/x-handlebars-template">
+		<script id="roommate-template" type="text/x-handlebars-template">
 <!-- 		<table>
 				<tr>
 					<th>
@@ -60,10 +60,19 @@
 					<td><input type="number"></td>
 				</tr>
 			</table> -->
-			<div>{{name}} has paid: <input type="number" name="{{name}}" value="{{paid}}"></div>
-			<button type="button" class="btn btn-space btn-expense" value="Add Expense" onClick="addExpense();"><i class="fa fa-cart-plus fa-lg"></i></button>
-
+			<div id={{id}}>
+				<span>{{name}} has paid </span>
+				<span class="roommate-expenses"></span>
+				<button type="button" class="btn btn-space btn-expense" value="Add Expense" onClick="addExpense('{{id}}');"><i class="fa fa-cart-plus fa-lg"></i></button>
+			</div>
 		</script>
+
+		<script id="roommate-expense-template"  type="text/x-handlebars-template">
+			<span>
+				<input type="number" value="{{amount}}"> for <input type="text" value="{{item}}">
+			</span>
+		</script>
+
 		<script id="roommate-owes-template" type="text/x-handlebars-template">
 			<table class="table">
 				<tr class="list-group-item">

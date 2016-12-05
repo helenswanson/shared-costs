@@ -13,6 +13,9 @@ body {
 	color: white;
 	background-color: #4D3271;
 }
+.btn:focus {
+	color: white;
+}
 .btn-space {
 	margin: 10px;
 }

@@ -1,9 +1,11 @@
 // ===================Handlebars specific============================
 // get your template content
-var paidSource = $("#roommate-paid-template").html();
+var paidSource = $("#roommate-template").html();
+var expenseSource = $("#roommate-expense-template").html();
 var owesSource = $("#roommate-owes-template").html();
 // use Handlebars to "compile" the template
 var roommatePaidTemplate = Handlebars.compile(paidSource);
+var roommateExpenseTemplate = Handlebars.compile(expenseSource);
 var roommateOwesTemplate = Handlebars.compile(owesSource);
 
 var roommateCounter = 0;
@@ -58,17 +60,30 @@ function addDebtorPayment(maxCreditor, maxDebtor, paymentAmount) {
 										// console.log("maxDebtor.payments: ", maxDebtor.payments);
 }
 
-function addExpense(){
+function addExpense(id, expense){
+	// when expense button is clicked, use jquery to collect all values within div button is contained within
 
+										console.log('id: ', id);
+										console.log('expense: ', expense);
+			
+
+
+	if (expense == undefined) {
+		expense = {item:"", amount: ""};
+	}
+
+	var html = roommateExpenseTemplate(expense);
+	// append your newly created html
+	$('#' + id + " .roommate-expenses").append(html);
 }
 
-function addRoommate(){
+function addRoommate() {
 	var limit = 9;
 
 	if (roommateCounter == limit)  {
 		alert("You have reached the limit of adding " + roommateCounter + " roommates");
 	} else {
-		var roommate = {name: "Roommate " + (roommateCounter + 1), paid: ""};
+		var roommate = {id: generateNewRoommateId(), name: "Roommate " + (roommateCounter + 1), paid: []};
 		// combine the template with individual roommate to create useable HTML
 		var html = roommatePaidTemplate(roommate);
 		// append your newly created html
@@ -76,6 +91,10 @@ function addRoommate(){
 
 		roommateCounter += 1;
 	}
+}
+
+function generateNewRoommateId() {
+	return "roommate_" + roommateCounter;
 }
 
 function getAveragePaid(roommates) {
@@ -120,7 +139,8 @@ function getRoommates() {
 	var roommates = [];
 
 	$inputs.each(function() {
-		var roommate = 	{	name: this.name,
+		var roommate = 	{	id: this.id,
+							name: this.name,
 							paid: [$(this).val()],
 							owes: "",
 							payments: [],
@@ -140,8 +160,8 @@ function getStoredRoomates() {
 		storedRoommates = JSON.parse(storedRoommates);
 	} else {
 		// set default data to use in the template
-		storedRoommates = 	[	{name: "Roommate 1", paid: [], owes: "", payments: [], stillOwes:""},
-								{name: "Roommate 2", paid: [], owes: "", payments: [], stillOwes:""}
+		storedRoommates = 	[	{id: "roommate_1", name: "Roommate 1", paid: [], owes: "", payments: [], stillOwes:""},
+								{id: "roommate_2", name: "Roommate 2", paid: [], owes: "", payments: [], stillOwes:""}
 							];
 	}	
 										// console.log('storedRoommates: ', storedRoommates);
