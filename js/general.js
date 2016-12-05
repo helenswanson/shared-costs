@@ -66,10 +66,8 @@ function addExpense(id, expense){
 										console.log('id: ', id);
 										console.log('expense: ', expense);
 			
-
-
 	if (expense == undefined) {
-		expense = {item:"", amount: ""};
+		expense = {item: "item", amount: 0};
 	}
 
 	var html = roommateExpenseTemplate(expense);
@@ -89,12 +87,17 @@ function addRoommate() {
 		// append your newly created html
 		$('#roommate-paid').append(html);
 
+		// render all expense associated with roommate object
+		$.each(roommate.paid, function(key, expense) {
+			addExpense(roommate.id, expense);
+		});
+
 		roommateCounter += 1;
 	}
 }
 
 function generateNewRoommateId() {
-	return "roommate_" + roommateCounter;
+	return "roommate_" + (roommateCounter + 1);
 }
 
 function getAveragePaid(roommates) {
