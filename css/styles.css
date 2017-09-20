@@ -3,18 +3,22 @@ body {
 	text-align: center;
 	margin: 100px;
 }
-/*.entry {
+.entry {
 	width: 100%;
-}*/
+}
+
+.roommate-row {
+	margin: 5px;
+}
 
 .btn {
-    background-color: #834F92;
+    background-color: #7854A0;
     color: white;
     border-radius: 2px;
 }
 .btn:hover {
     color: white;
-   	background-color: #5F396A;
+   	background-color: #50386B;
 }
 .btn:focus {
 	color: white;
@@ -29,12 +33,12 @@ body {
 	background-color: #334171 !important;
 }*/
 .btn-add {
-    background-color: #334171 !important;
+    background-color: #314072 !important;
     padding-left: 50px;
     padding-right: 50px;
 }
 .btn-add:hover {
-    background-color: #192138 !important;
+    background-color: #182039 !important;
 }
 
 table {
