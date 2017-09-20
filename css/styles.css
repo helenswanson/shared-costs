@@ -3,6 +3,9 @@ body {
 	text-align: center;
 	margin: 100px;
 }
+/*.entry {
+	width: 100%;
+}*/
 
 .btn {
     background-color: #7E55B4;
@@ -13,16 +16,29 @@ body {
     color: white;
    	background-color: #4D3271;
 }
+.btn:focus {
+	color: white;
+}
 .btn-space {
 	margin: 10px;
 }
+/*.btn-expense {
+	background-color: #566CB3 !important;
+}
+.btn-expense:hover {
+	background-color: #334171 !important;
+}*/
 .btn-add {
-    background-color: #566CB3 !important;
+    background-color: #334171 !important;
     padding-left: 50px;
     padding-right: 50px;
 }
 .btn-add:hover {
-    background-color: #334171 !important;
+    background-color: #192138 !important;
+}
+
+table {
+	text-align: left;
 }
 
 .table>tbody>tr>td {
