@@ -3,46 +3,30 @@ body {
 	text-align: center;
 	margin: 100px;
 }
-.entry {
-	width: 100%;
-}
 
 .btn {
-	background-color: #7E55B4;
-	color: white;
-	border-radius: 2px;
+    background-color: #7E55B4;
+    color: white;
+    border-radius: 2px;
 }
 .btn:hover {
-	color: white;
-	background-color: #4D3271;
-}
-.btn:focus {
-	color: white;
+    color: white;
+   	background-color: #4D3271;
 }
 .btn-space {
 	margin: 10px;
 }
-.btn-expense {
-	background-color: #566CB3 !important;
-}
-.btn-expense:hover {
-	background-color: #334171 !important;
-}
 .btn-add {
-	background-color: #334171 !important;
-	padding-left: 50px;
-	padding-right: 50px;
+    background-color: #566CB3 !important;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 .btn-add:hover {
-	background-color: #192138 !important;
-}
-
-table {
-	text-align: left;
+    background-color: #334171 !important;
 }
 
 .table>tbody>tr>td {
-	border-top: none;
+    border-top: none;
 }
 
 .list-group{

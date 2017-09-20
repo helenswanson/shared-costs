@@ -22,14 +22,14 @@
 
 	<body>
 		<div class="page-header">
-			<h3>SHARED ROOMMATE EXPENSES</h3>
+			<h2>SHARED EXPENSES</h2>
 		</div>
 		<div class="entry">
 			<form id="user_inputs">
 				<div id="dynamicInput">
 					<div id="roommate-paid"></div>
 				</div>
-				<button type="button" class="btn btn-space btn-add" value="Add roommate" onClick="addRoommate();"><i class="fa fa-user-plus fa-lg"></i></button>
+				<button type="button" class="btn btn-space btn-add" value="Add roommate" onClick="addInput();"><i class="fa fa-user-plus fa-lg"></i></button>
 			</form>
 
 			<div class="btn-group" role="group" aria-label="...">
@@ -45,34 +45,9 @@
 		</div>
 
 		<!-- Handlebars templates -->
-		<script id="roommate-template" type="text/x-handlebars-template">
-<!-- 		<table>
-				<tr>
-					<th>
-						<td>Name</td>
-						<td>Expense</td>
-						<td>Amount</td>
-					</th>
-				</tr>
-				<tr>
-					<td><input type="number"></td>
-					<td><input type="number"></td>
-					<td><input type="number"></td>
-				</tr>
-			</table> -->
-			<div id={{id}}>
-				<div>{{name}} has paid </div>
-				<span class="roommate-expenses"></span>
-				<button type="button" class="btn btn-space btn-expense" value="Add Expense" onClick="addExpense('{{id}}');"><i class="fa fa-cart-plus fa-lg"></i></button>
-			</div>
+		<script id="roommate-paid-template" type="text/x-handlebars-template">
+			<div>{{name}} has paid: <input type="number" name="{{name}}" value="{{paid}}"></div>
 		</script>
-
-		<script id="roommate-expense-template"  type="text/x-handlebars-template">
-			<div>
-				<input type="number" value="{{amount}}"> for <input type="text" value="{{item}}">
-			</div>
-		</script>
-
 		<script id="roommate-owes-template" type="text/x-handlebars-template">
 			<table class="table">
 				<tr class="list-group-item">
