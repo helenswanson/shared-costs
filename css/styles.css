@@ -8,13 +8,13 @@ body {
 }*/
 
 .btn {
-    background-color: #8A4B95;
+    background-color: #834F92;
     color: white;
     border-radius: 2px;
 }
 .btn:hover {
     color: white;
-   	background-color: #4D3271;
+   	background-color: #5F396A;
 }
 .btn:focus {
 	color: white;
